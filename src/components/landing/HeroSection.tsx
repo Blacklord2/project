@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Users, Clock, CheckCircle } from 'lucide-react';
+import { ArrowRight, Users, Clock, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import dbLogo from '@/assets/logo.svg';
 import heroImage from '@/assets/hero-campus.jpg';
 
 export function HeroSection() {
@@ -57,8 +58,8 @@ export function HeroSection() {
           {/* Stats */}
           <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-primary-foreground/20">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-secondary/20 backdrop-blur-sm flex items-center justify-center">
-                <Sparkles className="h-6 w-6 text-secondary" />
+              <div className="h-12 w-12 rounded-xl overflow-hidden backdrop-blur-sm flex items-center justify-center">
+                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover opacity-90" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-primary-foreground">Easy</p>

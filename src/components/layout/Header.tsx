@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Bell, User, LogOut, Sparkles, Settings } from 'lucide-react';
+import dbLogo from '@/assets/logo.svg';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,11 +12,25 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/context/AuthContext';
 import { Badge } from '@/components/ui/badge';
+import { AboutDialog } from './AboutDialog';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToFeatures = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    } else {
+      document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -27,8 +42,8 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-md group-hover:shadow-lg transition-shadow">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
+            <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover" />
           </div>
           <div className="flex flex-col">
             <span className="font-display font-bold text-lg leading-tight">DoBetter</span>
@@ -41,12 +56,8 @@ export function Header() {
           <Link to="/">
             <Button variant="ghost" size="sm">Home</Button>
           </Link>
-          <Link to="/features">
-            <Button variant="ghost" size="sm">Features</Button>
-          </Link>
-          <Link to="/about">
-            <Button variant="ghost" size="sm">About</Button>
-          </Link>
+          <Button variant="ghost" size="sm" onClick={scrollToFeatures}>Features</Button>
+          <Button variant="ghost" size="sm" onClick={() => setIsAboutOpen(true)}>About</Button>
           {isAuthenticated && (
             <Link to="/dashboard">
               <Button variant="ghost" size="sm">Dashboard</Button>
@@ -128,12 +139,8 @@ export function Header() {
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <Button variant="ghost" className="w-full justify-start">Home</Button>
             </Link>
-            <Link to="/features" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">Features</Button>
-            </Link>
-            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">About</Button>
-            </Link>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => { scrollToFeatures(); setIsMenuOpen(false); }}>Features</Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => { setIsAboutOpen(true); setIsMenuOpen(false); }}>About</Button>
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
@@ -156,6 +163,7 @@ export function Header() {
           </nav>
         </div>
       )}
+      <AboutDialog open={isAboutOpen} onOpenChange={setIsAboutOpen} />
     </header>
   );
 }

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Sparkles, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import dbLogo from '@/assets/logo.svg';
 
 export function Footer() {
   return (
@@ -9,8 +10,8 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary shadow-md">
-                <Sparkles className="h-5 w-5 text-secondary-foreground" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl overflow-hidden shadow-md">
+                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover opacity-90" />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-bold text-lg leading-tight">DoBetter</span>

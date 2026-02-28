@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import dbLogo from '@/assets/logo.svg';
 
 export function CTASection() {
   return (
@@ -12,8 +13,8 @@ export function CTASection() {
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary-foreground/5 rounded-full blur-3xl" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary/20 backdrop-blur-sm mb-6">
-              <Sparkles className="h-7 w-7 text-secondary" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden backdrop-blur-sm mb-6">
+              <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover opacity-90" />
             </div>
 
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">

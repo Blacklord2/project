@@ -38,7 +38,7 @@ export function HowItWorksSection() {
           </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
             Get Started in
-            <span className="text-gradient"> 4 Simple Steps</span>
+            <span className="text-primaryfd"> 4 Simple Steps</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             Start organizing your life today with our simple and intuitive platform.

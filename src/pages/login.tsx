@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import dbLogo from '@/assets/logo.svg';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -56,8 +57,8 @@ export default function LoginPage() {
         <div className="w-full max-w-md animate-fade-up">
           <Card className="border-border/50 shadow-xl">
             <CardHeader className="text-center pb-2">
-              <div className="mx-auto h-12 w-12 rounded-xl bg-gradient-to-br from-secondary to-secondary/70 flex items-center justify-center mb-4">
-                <Sparkles className="h-6 w-6 text-secondary-foreground" />
+              <div className="mx-auto h-12 w-12 rounded-xl overflow-hidden flex items-center justify-center mb-4">
+                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover" />
               </div>
               <CardTitle className="font-display text-2xl">Welcome Back</CardTitle>
               <CardDescription>Sign in to access your activities</CardDescription>

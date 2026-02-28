@@ -79,7 +79,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="py-20 md:py-28 bg-muted/30">
+    <section id="features" className="py-20 md:py-28 bg-muted/30">
       <div className="container">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -87,8 +87,8 @@ export function FeaturesSection() {
             Features
           </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-            Everything You Need to
-            <span className="text-gradient block">DoBetter</span>
+            Everything You Need to{' '}
+            <span className="text-gradient">DoBetter</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             Simple yet powerful tools to help you organize your day, 
