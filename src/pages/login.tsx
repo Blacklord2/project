@@ -25,9 +25,9 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
+      const loggedInUser = await login(email, password);
       
-      if (success) {
+      if (loggedInUser) {
         toast({
           title: 'Welcome back!',
           description: 'You have successfully signed in.',

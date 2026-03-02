@@ -43,18 +43,20 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      const success = await register({
-        fullName: formData.fullName,
-        email: formData.email,
-        password: formData.password,
-      });
+      const newUser = await register(formData.email, formData.fullName, formData.password);
       
-      if (success) {
+      if (newUser) {
         toast({
           title: 'Account created!',
           description: 'Welcome to DoBetter. Redirecting to dashboard...',
         });
         navigate('/dashboard');
+      } else {
+        toast({
+          title: 'Registration failed',
+          description: 'This email may already be in use. Please try another.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       toast({

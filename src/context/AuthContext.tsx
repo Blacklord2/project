@@ -1,83 +1,88 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User } from '@/types';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { authApi, ApiUser } from '@/lib/api';
+
+/* ─── Types ──────────────────────────────────────────────────────────────── */
+
+export interface User {
+  id: string;
+  email: string;
+  fullName: string;
+}
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<User | null>;
   logout: () => void;
-  register: (userData: Partial<User> & { password: string }) => Promise<boolean>;
+  register: (email: string, fullName: string, password: string) => Promise<User | null>;
 }
+
+/* ─── Context ────────────────────────────────────────────────────────────── */
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock users for demonstration
-const mockUsers: (User & { password: string })[] = [
-  {
-    id: '1',
-    email: 'user@dobetter.com',
-    fullName: 'Demo User',
-    password: 'user123',
-  },
-];
+function toUser(api: ApiUser): User {
+  return { id: String(api.id), email: api.email, fullName: api.fullName };
+}
+
+/* ─── Provider ───────────────────────────────────────────────────────────── */
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser]         = useState<User | null>(null);
+  const [isLoading, setLoading] = useState(true);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    const foundUser = mockUsers.find(
-      (u) => u.email === email && u.password === password
-    );
-    
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
-      return true;
+  // Restore session from stored JWT on mount
+  useEffect(() => {
+    const token = localStorage.getItem('db_token');
+    if (!token) { setLoading(false); return; }
+
+    authApi.me()
+      .then(apiUser => setUser(toUser(apiUser)))
+      .catch(() => localStorage.removeItem('db_token'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const login = async (email: string, password: string): Promise<User | null> => {
+    try {
+      const { user: apiUser, token } = await authApi.login(email, password);
+      localStorage.setItem('db_token', token);
+      const u = toUser(apiUser);
+      setUser(u);
+      return u;
+    } catch {
+      return null;
     }
-    
-    return false;
   };
 
   const logout = () => {
+    localStorage.removeItem('db_token');
     setUser(null);
   };
 
-  const register = async (userData: Partial<User> & { password: string }): Promise<boolean> => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    const newUser: User = {
-      id: String(mockUsers.length + 1),
-      email: userData.email || '',
-      fullName: userData.fullName || '',
-    };
-    
-    setUser(newUser);
-    return true;
+  const register = async (email: string, fullName: string, password: string): Promise<User | null> => {
+    try {
+      const { user: apiUser, token } = await authApi.register(email, fullName, password);
+      localStorage.setItem('db_token', token);
+      const u = toUser(apiUser);
+      setUser(u);
+      return u;
+    } catch {
+      return null;
+    }
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated: !!user,
-        login,
-        logout,
-        register,
-      }}
-    >
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
+/* ─── Hook ───────────────────────────────────────────────────────────────── */
+
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used within an AuthProvider');
+  return ctx;
 }
