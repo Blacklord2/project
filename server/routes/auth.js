@@ -17,11 +17,6 @@ router.post('/register', async (req, res) => {
     return res.status(400).json({ error: 'Password must be at least 6 characters' });
   }
 
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
-  if (existing) {
-    return res.status(409).json({ error: 'An account with this email already exists' });
-  }
-
   const hashed = await bcrypt.hash(password, 10);
   const result = db.prepare(
     'INSERT INTO users (email, full_name, password) VALUES (?, ?, ?)'
