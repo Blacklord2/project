@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-DoBetter is a personal activity management application designed to help students, professionals, and anyone who wants to organize their daily life. Plan your day, track your progress, and build better habits — all in one place.
+DoBetter is a personal activity management application designed to help students, professionals, and anyone who wants to organize their daily life. Plan your day, track your progress, and build better habits, all in one place.
 
 ## Features
 
