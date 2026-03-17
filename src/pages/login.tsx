@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import dbLogo from '@/assets/logo.svg';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Layout } from '@/components/layout/layout';
@@ -15,10 +13,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const { login } = useAuth();
+
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/dashboard', { replace: true });
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export default function LoginPage() {
 
     try {
       const loggedInUser = await login(email, password);
-      
+
       if (loggedInUser) {
         toast({
           title: 'Welcome back!',
@@ -53,89 +55,81 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 bg-muted/30">
-        <div className="w-full max-w-md animate-fade-up">
-          <Card className="border-border/50 shadow-xl">
-            <CardHeader className="text-center pb-2">
-              <div className="mx-auto h-12 w-12 rounded-xl overflow-hidden flex items-center justify-center mb-4">
-                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover" />
+      <div className="min-h-[calc(100vh-57px)] flex">
+        {/* Left — form */}
+        <div className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="w-full max-w-sm animate-fade-up">
+            <div className="mb-8">
+              <h1 className="font-serif text-3xl font-semibold mb-2">Welcome back</h1>
+              <p className="text-muted-foreground text-sm">Sign in to continue to your dashboard.</p>
+            </div>
+
+            {/* Demo credentials */}
+            <div className="mb-6 p-3 rounded-lg bg-muted/60 border border-border text-sm">
+              <p className="font-medium text-xs text-muted-foreground uppercase tracking-wide mb-1">Demo account</p>
+              <p className="text-foreground/70 text-xs font-mono">user@dobetter.com / user123</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-10"
+                  required
+                />
               </div>
-              <CardTitle className="font-display text-2xl">Welcome Back</CardTitle>
-              <CardDescription>Sign in to access your activities</CardDescription>
-            </CardHeader>
 
-            <CardContent className="pt-4">
-              {/* Demo credentials info */}
-              <div className="mb-6 p-3 rounded-lg bg-info/10 border border-info/20 text-sm">
-                <p className="text-info font-medium">Demo credentials:</p>
-                <p className="text-muted-foreground text-xs mt-1">user@dobetter.com / user123</p>
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
+              <Button type="submit" className="w-full h-10 bg-foreground text-background hover:bg-foreground/90 text-sm font-medium" disabled={isLoading}>
+                {isLoading ? 'Signing in...' : 'Sign in'}
+              </Button>
+            </form>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10 pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-foreground font-medium hover:underline underline-offset-4">
+                Create one
+              </Link>
+            </p>
+          </div>
+        </div>
 
-                <div className="flex items-center justify-between text-sm">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded border-input" />
-                    <span className="text-muted-foreground">Remember me</span>
-                  </label>
-                  <Link to="/forgot-password" className="text-secondary hover:underline">
-                    Forgot password?
-                  </Link>
-                </div>
-
-                <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                  {isLoading ? 'Signing in...' : 'Sign In'}
-                </Button>
-              </form>
-            </CardContent>
-
-            <CardFooter className="flex justify-center border-t pt-6">
-              <p className="text-sm text-muted-foreground">
-                Don't have an account?{' '}
-                <Link to="/register" className="text-secondary font-medium hover:underline">
-                  Create one
-                </Link>
-              </p>
-            </CardFooter>
-          </Card>
+        {/* Right — decorative panel */}
+        <div className="hidden lg:flex flex-1 items-center justify-center bg-foreground relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-primary/15 rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-0 w-56 h-56 bg-primary/10 rounded-full blur-[80px]" />
+          <div className="relative text-center px-12">
+            <p className="font-serif text-4xl font-semibold text-background leading-tight italic">
+              "The secret of getting ahead is getting started."
+            </p>
+            <p className="mt-4 text-background/50 text-sm">— Mark Twain</p>
+          </div>
         </div>
       </div>
     </Layout>

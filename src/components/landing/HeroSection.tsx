@@ -1,95 +1,63 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Clock, CheckCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import dbLogo from '@/assets/logo.svg';
-import heroImage from '@/assets/hero-campus.jpg';
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Productivity workspace"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 gradient-hero opacity-90" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent" />
-      </div>
+    <section className="relative overflow-hidden bg-background">
+      {/* Subtle texture */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      }} />
 
-      {/* Content */}
-      <div className="relative container py-20 md:py-32 lg:py-40">
-        <div className="max-w-3xl space-y-8 animate-fade-up">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full bg-secondary/20 border border-secondary/30 px-4 py-1.5 text-sm text-primary-foreground backdrop-blur-sm">
-            <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse" />
+      <div className="relative container py-24 md:py-36 lg:py-44">
+        <div className="max-w-2xl space-y-8 animate-fade-up">
+          {/* Overline */}
+          <p className="font-sans text-sm font-medium tracking-widest uppercase text-primary">
             Personal Activity Planner
-          </div>
+          </p>
 
-          {/* Heading */}
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight">
-            Plan Your Day
-            <span className="block text-secondary mt-2">DoBetter</span>
+          {/* Heading — editorial serif */}
+          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight">
+            Plan your day.
+            <br />
+            <span className="text-primary italic">Do better.</span>
           </h1>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl leading-relaxed">
-            Take control of your time with DoBetter. Create, organize, and track 
-            your daily activities effortlessly. Build better habits and achieve 
-            your goals one task at a time.
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+            Create, organize, and track your daily activities.
+            Build habits that stick, one task at a time.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-4">
+          {/* CTA */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link to="/register">
-              <Button variant="hero" size="xl">
-                Get Started Free
-                <ArrowRight className="h-5 w-5" />
+              <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 text-sm font-medium px-6 h-11">
+                Start for free
+                <ArrowRight className="h-4 w-4 ml-1" />
               </Button>
             </Link>
-            <Link to="/features">
-              <Button variant="hero-outline" size="xl">
-                Explore Features
+            <Link to="/login">
+              <Button variant="outline" size="lg" className="text-sm font-medium px-6 h-11 border-border hover:bg-muted/50">
+                Sign in
               </Button>
             </Link>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-primary-foreground/20">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl overflow-hidden backdrop-blur-sm flex items-center justify-center">
-                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover opacity-90" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">Easy</p>
-                <p className="text-sm text-primary-foreground/70">To Use</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-secondary/20 backdrop-blur-sm flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 text-secondary" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">Track</p>
-                <p className="text-sm text-primary-foreground/70">Progress</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-secondary/20 backdrop-blur-sm flex items-center justify-center">
-                <Clock className="h-6 w-6 text-secondary" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">Save</p>
-                <p className="text-sm text-primary-foreground/70">Time</p>
-              </div>
-            </div>
+          {/* Quiet proof */}
+          <div className="flex items-center gap-6 pt-4 text-sm text-muted-foreground">
+            <span>Free forever</span>
+            <span className="w-1 h-1 rounded-full bg-border" />
+            <span>No credit card</span>
+            <span className="w-1 h-1 rounded-full bg-border" />
+            <span>Takes 30 seconds</span>
           </div>
         </div>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+      {/* Bottom fade line */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-border" />
     </section>
   );
 }

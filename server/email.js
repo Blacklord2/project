@@ -73,7 +73,7 @@ function reminderEmailHtml(fullName, activity) {
   <div class="c">
     <div class="h"><div class="logo">DB<span>DoBetter — Organize Your Life</span></div></div>
     <div class="b">
-      <div class="g">⏰ Activity Reminder — 30 Minutes Away!</div>
+      <div class="g">⏰ Activity Reminder — 5 Minutes Away!</div>
       <p class="t">Hi <strong>${fullName}</strong>, your upcoming activity is starting soon. Get ready!</p>
       <div class="card">
         <div class="ct">${activity.title}</div>
@@ -108,7 +108,7 @@ async function sendReminderEmail(email, fullName, activity) {
   await transporter.sendMail({
     from: `"DoBetter" <${process.env.GMAIL_USER}>`,
     to: email,
-    subject: `⏰ Reminder: "${activity.title}" starts in 30 minutes`,
+    subject: `⏰ Reminder: "${activity.title}" starts in 5 minutes`,
     html: reminderEmailHtml(fullName, activity),
   });
   console.log(`✅ Reminder sent to ${email} for: ${activity.title}`);

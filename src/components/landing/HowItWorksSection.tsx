@@ -1,73 +1,63 @@
-import { UserPlus, Settings, Calendar, CheckCircle } from 'lucide-react';
+import { UserPlus, Calendar, CheckCircle, BarChart3 } from 'lucide-react';
 
 const steps = [
   {
-    step: 1,
+    step: '01',
     icon: UserPlus,
-    title: 'Create Your Account',
-    description: 'Sign up for free in seconds with just your email and password.',
+    title: 'Create an account',
+    description: 'Sign up free with your email. Takes less than 30 seconds.',
   },
   {
-    step: 2,
+    step: '02',
     icon: Calendar,
-    title: 'Add Activities',
-    description: 'Create activities with title, time, category, and optional description.',
+    title: 'Add your activities',
+    description: 'Set a title, time, date, and category for each task.',
   },
   {
-    step: 3,
-    icon: Settings,
-    title: 'Organize Your Day',
-    description: 'View your schedule, categorize tasks, and prioritize what matters most.',
-  },
-  {
-    step: 4,
+    step: '03',
     icon: CheckCircle,
-    title: 'Track Progress',
-    description: 'Mark activities complete and watch your productivity grow over time.',
+    title: 'Complete & track',
+    description: 'Check off tasks as you go. Your progress updates in real time.',
+  },
+  {
+    step: '04',
+    icon: BarChart3,
+    title: 'Review your week',
+    description: 'See charts and streaks that show how productive you\'ve been.',
   },
 ];
 
 export function HowItWorksSection() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 border-b border-border">
       <div className="container">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-block text-secondary font-semibold text-sm uppercase tracking-wider mb-4">
+        <div className="max-w-xl mb-14">
+          <p className="font-sans text-sm font-medium tracking-widest uppercase text-primary mb-4">
             How It Works
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-            Get Started in
-            <span className="text-primaryfd"> 4 Simple Steps</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            Start organizing your life today with our simple and intuitive platform.
           </p>
+          <h2 className="font-serif text-3xl md:text-4xl font-semibold leading-tight">
+            Four steps to a
+            <br />more organized day
+          </h2>
         </div>
 
-        {/* Steps */}
-        <div className="relative">
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute top-24 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-secondary/30 to-transparent" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+          {steps.map((item, index) => (
+            <div key={index} className="relative">
+              {/* Step number */}
+              <span className="font-serif text-6xl font-light text-border/80 leading-none select-none">
+                {item.step}
+              </span>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((item, index) => (
-              <div key={index} className="relative text-center group">
-                {/* Step Number */}
-                <div className="relative z-10 mx-auto mb-6">
-                  <div className="h-24 w-24 mx-auto rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
-                    <item.icon className="h-10 w-10 text-primary-foreground" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-secondary text-secondary-foreground font-bold flex items-center justify-center text-sm shadow-md">
-                    {item.step}
-                  </div>
+              <div className="mt-4 space-y-2">
+                <div className="h-9 w-9 rounded-lg bg-foreground/5 flex items-center justify-center">
+                  <item.icon className="h-4.5 w-4.5 text-foreground/70" />
                 </div>
-
-                <h3 className="font-display font-semibold text-xl mb-3">{item.title}</h3>
+                <h3 className="font-sans font-semibold text-base pt-1">{item.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

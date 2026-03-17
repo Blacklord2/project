@@ -1,60 +1,45 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import dbLogo from '@/assets/logo.svg';
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function CTASection() {
   return (
     <section className="py-20 md:py-28">
       <div className="container">
-        <div className="relative overflow-hidden rounded-3xl gradient-hero p-8 md:p-16">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary-foreground/5 rounded-full blur-3xl" />
+        <div className="relative bg-foreground rounded-2xl px-8 py-16 md:px-16 md:py-20 overflow-hidden">
+          {/* Subtle decorative element */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full blur-[80px]" />
 
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden backdrop-blur-sm mb-6">
-              <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover opacity-90" />
-            </div>
-
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
-              Ready to
-              <span className="text-secondary block mt-2">DoBetter?</span>
+          <div className="relative z-10 max-w-xl mx-auto text-center">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold text-background leading-tight mb-4">
+              Ready to do
+              <span className="italic"> better?</span>
             </h2>
 
-            <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-              Start organizing your activities today. It's free, simple, and 
-              designed to help you make the most of every day.
+            <p className="text-background/60 text-base md:text-lg mb-8 max-w-md mx-auto leading-relaxed">
+              Start organizing your day in under a minute. It's free, no strings
+              attached.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <Link to="/register">
-                <Button variant="hero" size="xl">
-                  Start Free Today
-                  <ArrowRight className="h-5 w-5" />
+                <Button
+                  size="lg"
+                  className="bg-background text-foreground hover:bg-background/90 text-sm font-medium px-6 h-11"
+                >
+                  Get started free
+                  <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Link to="/login">
-                <Button variant="hero-outline" size="xl">
-                  Sign In
+                <Button
+                  size="lg"
+                  className="text-sm font-medium px-6 h-11 bg-transparent border border-background/30 text-background/80 hover:bg-background/10 hover:text-background"
+                >
+                  Sign in
                 </Button>
               </Link>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-primary-foreground/70">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-secondary" />
-                <span>Free to use</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-secondary" />
-                <span>No credit card required</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-secondary" />
-                <span>Simple & intuitive</span>
-              </div>
             </div>
           </div>
         </div>

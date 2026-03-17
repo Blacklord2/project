@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import dbLogo from '@/assets/logo.svg';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Layout } from '@/components/layout/layout';
@@ -19,10 +17,14 @@ export default function RegisterPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const { register } = useAuth();
+
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/dashboard', { replace: true });
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -30,7 +32,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: 'Password mismatch',
@@ -44,7 +46,7 @@ export default function RegisterPage() {
 
     try {
       const newUser = await register(formData.email, formData.fullName, formData.password);
-      
+
       if (newUser) {
         toast({
           title: 'Account created!',
@@ -71,108 +73,100 @@ export default function RegisterPage() {
 
   return (
     <Layout>
-      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 bg-muted/30">
-        <div className="w-full max-w-md animate-fade-up">
-          <Card className="border-border/50 shadow-xl">
-            <CardHeader className="text-center pb-2">
-              <div className="mx-auto h-12 w-12 rounded-xl overflow-hidden flex items-center justify-center mb-4">
-                <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover" />
+      <div className="min-h-[calc(100vh-57px)] flex">
+        {/* Left — decorative panel */}
+        <div className="hidden lg:flex flex-1 items-center justify-center bg-foreground relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/15 rounded-full blur-[100px]" />
+          <div className="absolute bottom-20 right-0 w-56 h-56 bg-primary/10 rounded-full blur-[80px]" />
+          <div className="relative text-center px-12">
+            <p className="font-serif text-4xl font-semibold text-background leading-tight italic">
+              "You don't have to be great to start, but you have to start to be great."
+            </p>
+            <p className="mt-4 text-background/50 text-sm">— Zig Ziglar</p>
+          </div>
+        </div>
+
+        {/* Right — form */}
+        <div className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="w-full max-w-sm animate-fade-up">
+            <div className="mb-8">
+              <h1 className="font-serif text-3xl font-semibold mb-2">Create an account</h1>
+              <p className="text-muted-foreground text-sm">Start organizing your day in seconds.</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="fullName" className="text-sm font-medium">Full name</Label>
+                <Input
+                  id="fullName"
+                  placeholder="Jane Doe"
+                  value={formData.fullName}
+                  onChange={(e) => handleChange('fullName', e.target.value)}
+                  className="h-10"
+                  required
+                />
               </div>
-              <CardTitle className="font-display text-2xl">Create Account</CardTitle>
-              <CardDescription>Join DoBetter to organize your life</CardDescription>
-            </CardHeader>
 
-            <CardContent className="pt-4">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Full Name */}
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="fullName"
-                      placeholder="Enter your full name"
-                      value={formData.fullName}
-                      onChange={(e) => handleChange('fullName', e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  className="h-10"
+                  required
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Create a password"
+                    value={formData.password}
+                    onChange={(e) => handleChange('password', e.target.value)}
+                    className="h-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
                 </div>
+              </div>
 
-                {/* Email */}
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={(e) => handleChange('email', e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                  className="h-10"
+                  required
+                />
+              </div>
 
-                {/* Password */}
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Create a password"
-                      value={formData.password}
-                      onChange={(e) => handleChange('password', e.target.value)}
-                      className="pl-10 pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
+              <Button type="submit" className="w-full h-10 bg-foreground text-background hover:bg-foreground/90 text-sm font-medium" disabled={isLoading}>
+                {isLoading ? 'Creating account...' : 'Create account'}
+              </Button>
+            </form>
 
-                {/* Confirm Password */}
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder="Confirm your password"
-                      value={formData.confirmPassword}
-                      onChange={(e) => handleChange('confirmPassword', e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                  {isLoading ? 'Creating account...' : 'Create Account'}
-                </Button>
-              </form>
-            </CardContent>
-
-            <CardFooter className="flex justify-center border-t pt-6">
-              <p className="text-sm text-muted-foreground">
-                Already have an account?{' '}
-                <Link to="/login" className="text-secondary font-medium hover:underline">
-                  Sign in
-                </Link>
-              </p>
-            </CardFooter>
-          </Card>
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Already have an account?{' '}
+              <Link to="/login" className="text-foreground font-medium hover:underline underline-offset-4">
+                Sign in
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </Layout>

@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db = require('../db');
+const { getDb } = require('../db');
 const { requireAuth, signToken } = require('../middleware/auth');
 const { sendLoginEmail } = require('../email');
 
@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
   }
 
   const hashed = await bcrypt.hash(password, 10);
-  const result = db.prepare(
+  const result = getDb().prepare(
     'INSERT INTO users (email, full_name, password) VALUES (?, ?, ?)'
   ).run(email, fullName, hashed);
 
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     return res.status(400).json({ error: 'email and password are required' });
   }
 
-  const row = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  const row = getDb().prepare('SELECT * FROM users WHERE email = ?').get(email);
   if (!row) {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
 
 // ── GET /api/auth/me ──────────────────────────────────────────────────────────
 router.get('/me', requireAuth, (req, res) => {
-  const row = db.prepare('SELECT id, email, full_name, created_at FROM users WHERE id = ?').get(req.user.id);
+  const row = getDb().prepare('SELECT id, email, full_name, created_at FROM users WHERE id = ?').get(req.user.id);
   if (!row) return res.status(404).json({ error: 'User not found' });
 
   res.json({
@@ -91,9 +91,9 @@ router.put('/profile', requireAuth, async (req, res) => {
   }
 
   params.push(req.user.id);
-  db.prepare(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`).run(...params);
+  getDb().prepare(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`).run(...params);
 
-  const row = db.prepare('SELECT id, email, full_name FROM users WHERE id = ?').get(req.user.id);
+  const row = getDb().prepare('SELECT id, email, full_name FROM users WHERE id = ?').get(req.user.id);
   res.json({ id: row.id, email: row.email, fullName: row.full_name });
 });
 

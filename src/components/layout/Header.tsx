@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Bell, User, LogOut, Sparkles, Settings } from 'lucide-react';
-import dbLogo from '@/assets/logo.svg';
+import { Menu, X, Bell, User, LogOut, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -38,72 +37,64 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-card/80 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/90 backdrop-blur-md">
+      <div className="container flex h-14 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
-            <img src={dbLogo} alt="DoBetter Logo" className="h-full w-full object-cover" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-bold text-lg leading-tight">DoBetter</span>
-            <span className="text-[10px] text-muted-foreground leading-none">Organize Your Life</span>
-          </div>
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="h-8 w-8 rounded-lg bg-foreground text-background flex items-center justify-center text-xs font-bold">db</span>
+          <span className="font-serif font-semibold text-lg tracking-tight">DoBetter</span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1">
           <Link to="/">
-            <Button variant="ghost" size="sm">Home</Button>
+            <Button variant="ghost" size="sm" className="text-sm font-medium text-muted-foreground hover:text-foreground">Home</Button>
           </Link>
-          <Button variant="ghost" size="sm" onClick={scrollToFeatures}>Features</Button>
-          <Button variant="ghost" size="sm" onClick={() => setIsAboutOpen(true)}>About</Button>
+          <Button variant="ghost" size="sm" className="text-sm font-medium text-muted-foreground hover:text-foreground" onClick={scrollToFeatures}>Features</Button>
+          <Button variant="ghost" size="sm" className="text-sm font-medium text-muted-foreground hover:text-foreground" onClick={() => setIsAboutOpen(true)}>About</Button>
           {isAuthenticated && (
             <Link to="/dashboard">
-              <Button variant="ghost" size="sm">Dashboard</Button>
+              <Button variant="ghost" size="sm" className="text-sm font-medium text-muted-foreground hover:text-foreground">Dashboard</Button>
             </Link>
           )}
         </nav>
 
-        {/* Right side actions */}
-        <div className="flex items-center gap-3">
+        {/* Right side */}
+        <div className="flex items-center gap-2">
           {isAuthenticated ? (
             <>
-              {/* Notifications */}
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-[10px] bg-destructive">
+              <Button variant="ghost" size="icon" className="relative h-8 w-8">
+                <Bell className="h-4 w-4" />
+                <Badge className="absolute -top-0.5 -right-0.5 h-4 w-4 p-0 flex items-center justify-center text-[9px] bg-primary text-primary-foreground">
                   2
                 </Badge>
               </Button>
 
-              {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="gap-2 pl-2 pr-3">
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-secondary to-secondary/60 flex items-center justify-center">
-                      <User className="h-4 w-4 text-secondary-foreground" />
+                  <Button variant="ghost" className="gap-2 pl-1.5 pr-2.5 h-8">
+                    <div className="h-7 w-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <User className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="hidden sm:inline font-medium text-sm">{user?.fullName?.split(' ')[0]}</span>
+                    <span className="hidden sm:inline text-sm font-medium">{user?.fullName?.split(' ')[0]}</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent align="end" className="w-52">
                   <div className="px-3 py-2">
-                    <p className="font-medium">{user?.fullName}</p>
+                    <p className="font-medium text-sm">{user?.fullName}</p>
                     <p className="text-xs text-muted-foreground">{user?.email}</p>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate('/dashboard')}>
-                    <Sparkles className="mr-2 h-4 w-4" />
                     Dashboard
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/settings')}>
-                    <Settings className="mr-2 h-4 w-4" />
+                    <Settings className="mr-2 h-3.5 w-3.5" />
                     Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" />
+                    <LogOut className="mr-2 h-3.5 w-3.5" />
                     Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -112,51 +103,50 @@ export function Header() {
           ) : (
             <div className="hidden sm:flex items-center gap-2">
               <Link to="/login">
-                <Button variant="ghost" size="sm">Sign In</Button>
+                <Button variant="ghost" size="sm" className="text-sm">Sign In</Button>
               </Link>
-              <Link to="/login">
-                <Button size="sm">Get Started</Button>
+              <Link to="/register">
+                <Button size="sm" className="text-sm bg-foreground text-background hover:bg-foreground/90">Get Started</Button>
               </Link>
             </div>
           )}
 
-          {/* Mobile menu button */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden h-8 w-8"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t bg-card animate-fade-in">
-          <nav className="container py-4 flex flex-col gap-2">
+        <div className="md:hidden border-t bg-background animate-fade-in">
+          <nav className="container py-3 flex flex-col gap-0.5">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">Home</Button>
+              <Button variant="ghost" className="w-full justify-start text-sm h-9">Home</Button>
             </Link>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => { scrollToFeatures(); setIsMenuOpen(false); }}>Features</Button>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => { setIsAboutOpen(true); setIsMenuOpen(false); }}>About</Button>
+            <Button variant="ghost" className="w-full justify-start text-sm h-9" onClick={() => { scrollToFeatures(); setIsMenuOpen(false); }}>Features</Button>
+            <Button variant="ghost" className="w-full justify-start text-sm h-9" onClick={() => { setIsAboutOpen(true); setIsMenuOpen(false); }}>About</Button>
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Dashboard</Button>
+                  <Button variant="ghost" className="w-full justify-start text-sm h-9">Dashboard</Button>
                 </Link>
-                <Button variant="ghost" className="w-full justify-start text-destructive" onClick={handleLogout}>
+                <Button variant="ghost" className="w-full justify-start text-sm h-9 text-destructive" onClick={handleLogout}>
                   Sign Out
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Sign In</Button>
+                  <Button variant="ghost" className="w-full justify-start text-sm h-9">Sign In</Button>
                 </Link>
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full">Get Started</Button>
+                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full mt-1 text-sm bg-foreground text-background hover:bg-foreground/90">Get Started</Button>
                 </Link>
               </>
             )}

@@ -2,132 +2,109 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
 
 @layer base {
   :root {
-    /* Primary - Deep Navy Blue (Academia/Trust) */
-    --primary: 220 65% 20%;
-    --primary-foreground: 210 40% 98%;
-    
-    /* Secondary - Teal (Knowledge/Growth) */
-    --secondary: 174 60% 40%;
-    --secondary-foreground: 210 40% 98%;
-    
-    /* Background - Clean whites and light grays */
-    --background: 210 20% 98%;
-    --foreground: 220 25% 15%;
-    
-    /* Cards - Pure white with subtle depth */
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 15%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 15%;
-    
-    /* Muted - Soft gray-blue */
-    --muted: 214 20% 94%;
-    --muted-foreground: 220 15% 45%;
-    
-    /* Accent - Warm amber for highlights */
-    --accent: 38 90% 55%;
-    --accent-foreground: 220 25% 15%;
-    
-    /* Destructive - Professional red */
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 210 40% 98%;
-    
-    /* Success state */
-    --success: 152 60% 40%;
-    --success-foreground: 210 40% 98%;
-    
-    /* Warning state */
-    --warning: 38 92% 50%;
-    --warning-foreground: 220 25% 15%;
-    
-    /* Info state */
-    --info: 200 80% 50%;
-    --info-foreground: 210 40% 98%;
-    
-    --border: 214 25% 88%;
-    --input: 214 25% 88%;
-    --ring: 220 65% 20%;
-    
-    --radius: 0.75rem;
-    
+    /* Warm cream foundation */
+    --background: 36 33% 97%;
+    --foreground: 24 10% 16%;
+
+    /* Cards — slightly warmer white */
+    --card: 40 33% 99%;
+    --card-foreground: 24 10% 16%;
+
+    --popover: 40 33% 99%;
+    --popover-foreground: 24 10% 16%;
+
+    /* Primary — terracotta/burnt sienna */
+    --primary: 13 56% 49%;
+    --primary-foreground: 40 33% 98%;
+
+    /* Secondary — sage/olive */
+    --secondary: 108 19% 40%;
+    --secondary-foreground: 40 33% 98%;
+
+    /* Muted — warm gray */
+    --muted: 30 15% 92%;
+    --muted-foreground: 24 8% 48%;
+
+    /* Accent — warm amber */
+    --accent: 30 15% 92%;
+    --accent-foreground: 24 10% 16%;
+
+    /* Destructive */
+    --destructive: 0 60% 48%;
+    --destructive-foreground: 40 33% 98%;
+
+    /* Status */
+    --success: 152 40% 38%;
+    --success-foreground: 40 33% 98%;
+    --warning: 38 80% 50%;
+    --warning-foreground: 24 10% 16%;
+    --info: 210 55% 48%;
+    --info-foreground: 40 33% 98%;
+
+    --border: 30 18% 87%;
+    --input: 30 18% 87%;
+    --ring: 13 56% 49%;
+    --radius: 0.5rem;
+
     /* Sidebar */
-    --sidebar-background: 220 65% 15%;
-    --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 174 60% 50%;
-    --sidebar-primary-foreground: 220 65% 10%;
-    --sidebar-accent: 220 50% 25%;
-    --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 50% 22%;
-    --sidebar-ring: 174 60% 50%;
-    
-    /* Custom gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220, 65%, 20%) 0%, hsl(220, 65%, 35%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(174, 60%, 35%) 0%, hsl(174, 60%, 50%) 100%);
-    --gradient-hero: linear-gradient(145deg, hsl(220, 65%, 15%) 0%, hsl(220, 50%, 28%) 50%, hsl(174, 50%, 30%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(210, 20%, 98%) 100%);
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220, 25%, 15%, 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220, 25%, 15%, 0.1), 0 2px 4px -1px hsl(220, 25%, 15%, 0.06);
-    --shadow-lg: 0 10px 15px -3px hsl(220, 25%, 15%, 0.1), 0 4px 6px -2px hsl(220, 25%, 15%, 0.05);
-    --shadow-xl: 0 20px 25px -5px hsl(220, 25%, 15%, 0.1), 0 10px 10px -5px hsl(220, 25%, 15%, 0.04);
-    --shadow-glow: 0 0 30px -5px hsl(174, 60%, 50%, 0.3);
+    --sidebar-background: 24 10% 14%;
+    --sidebar-foreground: 36 20% 88%;
+    --sidebar-primary: 13 56% 55%;
+    --sidebar-primary-foreground: 36 20% 98%;
+    --sidebar-accent: 24 10% 20%;
+    --sidebar-accent-foreground: 36 20% 88%;
+    --sidebar-border: 24 10% 22%;
+    --sidebar-ring: 13 56% 55%;
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 210 20% 95%;
-    
-    --card: 220 25% 12%;
-    --card-foreground: 210 20% 95%;
-    
-    --popover: 220 25% 12%;
-    --popover-foreground: 210 20% 95%;
-    
-    --primary: 174 60% 50%;
-    --primary-foreground: 220 25% 8%;
-    
-    --secondary: 220 50% 30%;
-    --secondary-foreground: 210 20% 95%;
-    
-    --muted: 220 25% 18%;
-    --muted-foreground: 215 15% 65%;
-    
-    --accent: 38 90% 55%;
-    --accent-foreground: 220 25% 8%;
-    
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 210 20% 95%;
-    
-    /* Success state */
-    --success: 152 60% 45%;
-    --success-foreground: 210 20% 95%;
-    
-    /* Warning state */
-    --warning: 38 92% 55%;
-    --warning-foreground: 220 25% 8%;
-    
-    /* Info state */
-    --info: 200 80% 55%;
-    --info-foreground: 210 20% 95%;
-    
-    --border: 220 25% 20%;
-    --input: 220 25% 20%;
-    --ring: 174 60% 50%;
-    
-    --sidebar-background: 220 30% 6%;
-    --sidebar-foreground: 210 15% 85%;
-    --sidebar-primary: 174 60% 50%;
-    --sidebar-primary-foreground: 220 30% 6%;
-    --sidebar-accent: 220 30% 15%;
-    --sidebar-accent-foreground: 210 15% 85%;
-    --sidebar-border: 220 25% 15%;
-    --sidebar-ring: 174 60% 50%;
+    --background: 24 10% 9%;
+    --foreground: 36 20% 92%;
+
+    --card: 24 10% 12%;
+    --card-foreground: 36 20% 92%;
+
+    --popover: 24 10% 12%;
+    --popover-foreground: 36 20% 92%;
+
+    --primary: 13 56% 55%;
+    --primary-foreground: 24 10% 9%;
+
+    --secondary: 108 19% 45%;
+    --secondary-foreground: 24 10% 9%;
+
+    --muted: 24 8% 18%;
+    --muted-foreground: 30 12% 60%;
+
+    --accent: 24 8% 18%;
+    --accent-foreground: 36 20% 92%;
+
+    --destructive: 0 55% 48%;
+    --destructive-foreground: 36 20% 92%;
+
+    --success: 152 40% 42%;
+    --success-foreground: 36 20% 92%;
+    --warning: 38 80% 55%;
+    --warning-foreground: 24 10% 9%;
+    --info: 210 55% 55%;
+    --info-foreground: 36 20% 92%;
+
+    --border: 24 8% 20%;
+    --input: 24 8% 20%;
+    --ring: 13 56% 55%;
+
+    --sidebar-background: 24 10% 6%;
+    --sidebar-foreground: 36 15% 85%;
+    --sidebar-primary: 13 56% 55%;
+    --sidebar-primary-foreground: 24 10% 6%;
+    --sidebar-accent: 24 10% 14%;
+    --sidebar-accent-foreground: 36 15% 85%;
+    --sidebar-border: 24 8% 15%;
+    --sidebar-ring: 13 56% 55%;
   }
 }
 
@@ -135,85 +112,42 @@
   * {
     @apply border-border;
   }
-  
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    @apply font-semibold tracking-tight;
+    font-family: 'Fraunces', Georgia, serif;
+    @apply font-semibold;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  .gradient-primary {
-    background: var(--gradient-primary);
+  .font-serif {
+    font-family: 'Fraunces', Georgia, serif;
   }
-  
-  .gradient-secondary {
-    background: var(--gradient-secondary);
+
+  .font-body {
+    font-family: 'DM Sans', system-ui, sans-serif;
   }
-  
-  .gradient-hero {
-    background: var(--gradient-hero);
-  }
-  
-  .gradient-card {
-    background: var(--gradient-card);
-  }
-  
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-  
-  .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20;
-  }
-  
+
   .text-gradient {
-    background: linear-gradient(135deg, hsl(174, 60%, 45%) 0%, hsl(220, 65%, 45%) 100%);
+    background: linear-gradient(135deg, hsl(13, 56%, 49%) 0%, hsl(13, 56%, 62%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
   }
-  
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-fade-up {
-    animation: fadeUp 0.6s ease-out forwards;
-  }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-  
-  .animate-slide-in {
-    animation: slideIn 0.5s ease-out forwards;
-  }
-  
-  .animate-pulse-soft {
-    animation: pulseSoft 3s ease-in-out infinite;
-  }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
+/* Animations — restrained, purposeful */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -222,18 +156,14 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-16px);
   }
   to {
     opacity: 1;
@@ -241,29 +171,39 @@
   }
 }
 
-@keyframes pulseSoft {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+.animate-fade-up {
+  animation: fadeUp 0.5s ease-out forwards;
 }
 
-/* Custom scrollbar */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-muted rounded-full;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full;
+  background: hsl(30, 15%, 80%);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/50;
+  background: hsl(30, 15%, 65%);
+}
+
+/* Selection */
+::selection {
+  background: hsl(13, 56%, 49%, 0.15);
+  color: hsl(24, 10%, 16%);
 }

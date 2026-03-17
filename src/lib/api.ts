@@ -104,6 +104,22 @@ export const activitiesApi = {
 
   delete: (id: string) =>
     request<{ success: boolean }>(`/activities/${id}`, { method: 'DELETE' }),
+
+  importIcs: async (file: File): Promise<{ success: boolean; imported: number; skipped: number; activities: ApiActivity[] }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const token = getToken();
+    const res = await fetch(`${BASE}/activities/import`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error((body as { error?: string }).error || `HTTP ${res.status}`);
+    }
+    return res.json();
+  },
 };
 
 /* ─── Reminders ──────────────────────────────────────────────────────────── */
