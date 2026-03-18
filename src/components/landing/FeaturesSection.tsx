@@ -26,7 +26,7 @@ const features = [
   {
     icon: Target,
     title: 'Goal Setting',
-    description: 'Categorize activities by type — work, study, fitness, personal — and stay focused.',
+    description: 'Categorize activities by type: work, study, fitness, personal, and stay focused.',
   },
   {
     icon: BarChart3,

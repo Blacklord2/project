@@ -50,7 +50,7 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
               <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-medium">Built for Everyone</p>
-                <p className="text-xs text-muted-foreground">Students, freelancers, professionals — DoBetter adapts to your workflow.</p>
+                <p className="text-xs text-muted-foreground">Students, freelancers, professionals; DoBetter adapts to your workflow.</p>
               </div>
             </div>
           </div>

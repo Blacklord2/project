@@ -62,11 +62,19 @@ export function Footer() {
             <div className="space-y-3">
               <h4 className="font-sans font-semibold text-sm tracking-wide uppercase text-muted-foreground">Contact</h4>
               <a
-                href="mailto:israeleyibio@gmail.com"
+                href="mailto:israeleyibio@gmail.com" 
+                className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors"
+              > 
+               <Mail className="h-3.5 w-3.5" />
+                israeleyibio@gmail.com
+              </a>
+              <h4 className="font-sans font-semibold text-sm tracking-wide uppercase text-muted-foreground">Contact</h4>
+              <a
+                href="mailto:iteoluwajohnson@gmail.com" 
                 className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
                 <Mail className="h-3.5 w-3.5" />
-                israeleyibio@gmail.com
+                iteoluwajohnson@gmail.com
               </a>
             </div>
           </div>
