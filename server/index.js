@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const { initDb, getDb } = require('./db');
 const authRoutes       = require('./routes/auth');
@@ -25,11 +26,8 @@ app.use('/api/auth',       authRoutes);
 app.use('/api/activities', activitiesRoutes);
 
 /* ─── Reminder scheduling ────────────────────────────────────────────────── */
-// Map of activityId -> timeoutId
 const scheduledReminders = new Map();
 
-// POST /api/reminders/schedule
-// Body: { activities: Activity[] }  (user resolved from JWT)
 app.post('/api/reminders/schedule', requireAuth, (req, res) => {
   const { activities } = req.body;
   if (!Array.isArray(activities)) {
@@ -53,7 +51,6 @@ app.post('/api/reminders/schedule', requireAuth, (req, res) => {
 
     if (msUntil <= 0) return;
 
-    // Cancel existing reminder for this activity
     if (scheduledReminders.has(activity.id)) {
       clearTimeout(scheduledReminders.get(activity.id));
     }
@@ -71,7 +68,6 @@ app.post('/api/reminders/schedule', requireAuth, (req, res) => {
   res.json({ success: true, scheduled });
 });
 
-// DELETE /api/reminders/:activityId
 app.delete('/api/reminders/:activityId', requireAuth, (req, res) => {
   const { activityId } = req.params;
   if (scheduledReminders.has(activityId)) {
@@ -79,6 +75,12 @@ app.delete('/api/reminders/:activityId', requireAuth, (req, res) => {
     scheduledReminders.delete(activityId);
   }
   res.json({ success: true });
+});
+
+/* ─── Serve Frontend ─────────────────────────────────────────────────────── */
+app.use(express.static(path.join(__dirname, '../dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 /* ─── Global error handler ───────────────────────────────────────────────── */
